@@ -1,7 +1,7 @@
 %define LANG ko
 %define name man-pages-%LANG
 %define version 20050219
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Korean(Hangul) Man Pages
 Name: %{name}
@@ -12,8 +12,8 @@ Group: System/Internationalization
 URL: http://man.kldp.org/
 Source: man-pages-%LANG-%version.tar.bz2
 Buildroot: %_tmppath/%name-root
-BuildRequires: man => 1.5j-8mdk
-Requires: locales-%LANG, man => 1.5j-8mdk
+BuildRequires: man => 1.6
+Requires: locales-%LANG, man => 1.6
 Autoreqprov: false
 BuildArchitectures: noarch
 
@@ -41,7 +41,7 @@ done
 rm $RPM_BUILD_ROOT/%_mandir/%LANG/man8/rpm{2cpio,}.8
 
 # those files conflict whith man package:
-rm $RPM_BUILD_ROOT/%_mandir/%LANG/man{1/man.1,5/man.config.5}
+rm $RPM_BUILD_ROOT/%_mandir/%LANG/man{1/man.1,1/whatis.1,5/man.config.5}
 
 LANG=%LANG DESTDIR=$RPM_BUILD_ROOT /usr/sbin/makewhatis $RPM_BUILD_ROOT/%_mandir/%LANG
 
@@ -65,4 +65,3 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /var/cache/man/%LANG/whatis
 /%_mandir/%LANG/man*
 %config(noreplace) %attr(755,root,root)/etc/cron.weekly/makewhatis-%LANG.cron
-
