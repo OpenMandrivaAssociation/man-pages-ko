@@ -11,6 +11,7 @@ License: GPL
 Group: System/Internationalization
 URL: http://man.kldp.org/
 Source: man-pages-%LANG-%version.tar.bz2
+Buildroot: %_tmppath/%name-root
 BuildRequires: man => 1.6
 Requires: locales-%LANG, man => 1.6
 Autoreqprov: false
