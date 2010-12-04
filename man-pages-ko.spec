@@ -1,5 +1,5 @@
-%define LANG ko
-%define name man-pages-%LANG
+%define LNG ko
+%define name man-pages-%LNG
 %define version 20050219
 %define release %mkrel 8
 
@@ -10,10 +10,10 @@ Release: %{release}
 License: GPL
 Group: System/Internationalization
 URL: http://man.kldp.org/
-Source: man-pages-%LANG-%version.tar.bz2
-Buildroot: %_tmppath/%name-root
+Source: man-pages-%LNG-%version.tar.bz2
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: man => 1.6
-Requires: locales-%LANG, man => 1.6
+Requires: locales-%LNG, man => 1.6
 Autoreqprov: false
 BuildArchitectures: noarch
 
@@ -29,44 +29,45 @@ They're maintained by the Korean Manpage Project
 %build
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%_mandir/%LANG/
+rm -rf %{buildroot}
+mkdir -p %{buildroot}/%_mandir/%LNG/
 
 for i in man?;do
-        cp -adpvrf $i $RPM_BUILD_ROOT/%_mandir/%LANG/
+        cp -adpvrf $i %{buildroot}/%_mandir/%LNG/
 done
 
 
 # those files conflict whith rpm package:
-rm $RPM_BUILD_ROOT/%_mandir/%LANG/man8/rpm{2cpio,}.8
+rm %{buildroot}/%_mandir/%LNG/man8/rpm{2cpio,}.8
 
 # those files conflict whith man package:
-rm $RPM_BUILD_ROOT/%_mandir/%LANG/man{1/man.1,1/whatis.1,5/man.config.5}
+rm %{buildroot}/%_mandir/%LNG/man{1/man.1,1/whatis.1,5/man.config.5}
 
-LANG=%LANG DESTDIR=$RPM_BUILD_ROOT /usr/sbin/makewhatis $RPM_BUILD_ROOT/%_mandir/%LANG
+LANG=%LNG DESTDIR=%{buildroot} %{_sbindir}/makewhatis %{buildroot}/%_mandir/%LNG
 
-mkdir -p $RPM_BUILD_ROOT/etc/cron.weekly
-cat > $RPM_BUILD_ROOT/etc/cron.weekly/makewhatis-%LANG.cron << EOF
+mkdir -p %{buildroot}%{_sysconfdir}/cron.weekly
+cat > %{buildroot}%{_sysconfdir}/cron.weekly/makewhatis-%LNG.cron << EOF
 #!/bin/bash
-LANG=%LANG /usr/sbin/makewhatis %_mandir/%LANG
+LANG=%LNG %{_sbindir}/makewhatis %_mandir/%LNG
 exit 0
 EOF
-chmod a+x $RPM_BUILD_ROOT/etc/cron.weekly/makewhatis-%LANG.cron
+chmod a+x %{buildroot}%{_sysconfdir}/cron.weekly/makewhatis-%LNG.cron
 
-mkdir -p  $RPM_BUILD_ROOT/var/cache/man/%LANG
+mkdir -p  %{buildroot}/var/cache/man/%LNG
 
-touch $RPM_BUILD_ROOT/var/cache/man/%LNG/whatis
+touch %{buildroot}/var/cache/man/%LNG/whatis
 
 %post
 %create_ghostfile /var/cache/man/%LNG/whatis root root 644
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(0644,root,man,755)
-%dir %_mandir/%LANG
-%dir /var/cache/man/%LANG
+%dir %_mandir/%LNG
+%dir /var/cache/man/%LNG
 %ghost %config(noreplace) /var/cache/man/%LNG/whatis
-%_mandir/%LANG/man*
-%config(noreplace) %attr(755,root,root)/etc/cron.weekly/makewhatis-%LANG.cron
+%_mandir/%LNG/man*
+%_mandir/%LNG/whatis
+%config(noreplace) %attr(755,root,root) %{_sysconfdir}/cron.weekly/makewhatis-%LNG.cron
