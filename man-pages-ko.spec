@@ -1,7 +1,7 @@
 %define LNG ko
 %define name man-pages-%LNG
 %define version 20050219
-%define release %mkrel 9
+%define release %mkrel 10
 
 Summary: Korean(Hangul) Man Pages
 Name: %{name}
