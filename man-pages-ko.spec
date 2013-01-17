@@ -1,7 +1,7 @@
 %define LNG ko
 %define name man-pages-%LNG
 %define version 20050219
-%define release %mkrel 12
+%define release 13
 
 Summary: Korean(Hangul) Man Pages
 Name: %{name}
@@ -43,12 +43,12 @@ rm %{buildroot}/%_mandir/%LNG/man8/rpm{2cpio,}.8
 # those files conflict whith man package:
 rm %{buildroot}/%_mandir/%LNG/man{1/man.1,1/whatis.1,5/man.config.5}
 
-LANG=%LNG DESTDIR=%{buildroot} %{_sbindir}/makewhatis %{buildroot}/%_mandir/%LNG
+LANG=%LNG DESTDIR=%{buildroot} %{_bindir}/mandb %{buildroot}/%_mandir/%LNG
 
 mkdir -p %{buildroot}%{_sysconfdir}/cron.weekly
 cat > %{buildroot}%{_sysconfdir}/cron.weekly/makewhatis-%LNG.cron << EOF
 #!/bin/bash
-LANG=%LNG %{_sbindir}/makewhatis %_mandir/%LNG
+LANG=%LNG %{_bindir}/mandb %_mandir/%LNG
 exit 0
 EOF
 chmod a+x %{buildroot}%{_sysconfdir}/cron.weekly/makewhatis-%LNG.cron
