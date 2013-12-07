@@ -3,7 +3,7 @@
 Summary:	Korean(Hangul) Man Pages
 Name:		man-pages-%{LNG}
 Version:	20050219
-Release:	13
+Release:	14
 License:	GPLv2
 Group:		System/Internationalization
 Url:		http://man.kldp.org/
