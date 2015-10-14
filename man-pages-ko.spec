@@ -3,7 +3,7 @@
 Summary:	Korean(Hangul) Man Pages
 Name:		man-pages-%{LNG}
 Version:	20050219
-Release:	22
+Release:	23
 License:	GPLv2
 Group:		System/Internationalization
 Url:		http://man.kldp.org/
@@ -13,6 +13,7 @@ BuildRequires:	man
 Requires:	locales-%{LNG}
 Requires:	man
 Autoreqprov:	false
+Conflicts:	filesystem < 3.0-17
 
 %description
 Korean translation of the official manpages from LDP and
@@ -56,12 +57,10 @@ touch %{buildroot}/var/cache/man/%{LNG}/whatis
 %create_ghostfile /var/cache/man/%{LNG}/whatis root root 644
 
 %files
-%dir %{_mandir}/%{LNG}
 %dir /var/cache/man/%{LNG}
 %ghost %config(noreplace) /var/cache/man/%{LNG}/whatis
 %{_mandir}/%{LNG}/man*
 %{_mandir}/%{LNG}/cat*
-%{_mandir}/%{LNG}/CACHEDIR.TAG*
 %{_mandir}/%{LNG}/index.db*
 #%{_mandir}/%{LNG}/whatis
 %config(noreplace) %attr(755,root,root) %{_sysconfdir}/cron.weekly/makewhatis-%{LNG}.cron
