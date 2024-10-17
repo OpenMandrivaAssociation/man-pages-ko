@@ -6,7 +6,7 @@ Version:	20050219
 Release:	26
 License:	GPLv2
 Group:		System/Internationalization
-Url:		http://man.kldp.org/
+Url:		https://man.kldp.org/
 Source0:	man-pages-%{LNG}-%{version}.tar.bz2
 BuildArch:	noarch
 BuildRequires:	man
